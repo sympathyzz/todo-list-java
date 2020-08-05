@@ -28,4 +28,8 @@ public class TodoService {
         Todo todo = todoRepository.findById(id);
         return "delete success!";
     }
+
+    public Todo findById(Integer id) {
+        return todoRepository.findById(id);
+    }
 }

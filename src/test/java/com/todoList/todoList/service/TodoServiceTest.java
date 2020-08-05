@@ -8,8 +8,10 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
@@ -74,6 +76,24 @@ public class TodoServiceTest {
         String message=todoService.deleteTodo(todo.getId());
         //then
         assertEquals("delete success!", message);
+    }
+
+    @Test
+    void should_return_specified_todo_when_find_given_id() {
+        //given
+        TodoRepository mock = Mockito.mock(TodoRepository.class);
+        when(mock.findById(1)).thenReturn(
+                new Todo(1, "学习1",false)
+        );
+        TodoService todoService = new TodoService(mock);
+        Integer todoId = 1;
+        //when
+        Todo returnTodo = todoService.findById(todoId);
+
+        //then
+        assertNotNull(returnTodo);
+        assertEquals(false, returnTodo.getStatus());
+
     }
 
 }
