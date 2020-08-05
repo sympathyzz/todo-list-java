@@ -6,10 +6,12 @@ import com.todoList.todoList.repository.TodoRepository;
 import java.util.List;
 
 public class TodoService {
+    private TodoRepository todoRepository;
     public TodoService(TodoRepository todoRepository) {
+        this.todoRepository=todoRepository;
     }
 
     public List<Todo> findAll() {
-        return null;
+        return todoRepository.findAll();
     }
 }
