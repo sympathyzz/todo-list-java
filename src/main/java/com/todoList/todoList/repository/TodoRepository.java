@@ -12,4 +12,8 @@ public class TodoRepository {
     public Todo updateStatus(int id) {
         return null;
     }
+
+    public Todo addTodo(Todo todo) {
+        return null;
+    }
 }

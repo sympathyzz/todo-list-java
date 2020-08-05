@@ -18,4 +18,8 @@ public class TodoService {
     public Todo updateStatus(Integer id) {
         return todoRepository.updateStatus(id);
     }
+
+    public Todo addTodo(Todo todo) {
+        return todoRepository.addTodo(todo);
+    }
 }

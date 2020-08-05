@@ -43,4 +43,19 @@ public class TodoServiceTest {
         //then
         assertEquals(false, updateTodo.getStatus());
     }
+
+    @Test
+    void should_return_todo_when_add_given_new_todo(){
+        //given
+        TodoRepository mock = Mockito.mock(TodoRepository.class);
+        Todo todo=new Todo(1, "学习1",true);
+        when(mock.addTodo(todo)).thenReturn(
+                todo
+        );
+        TodoService todoService = new TodoService(mock);
+        //when
+        Todo addedTodo = todoService.addTodo(todo);
+        //then
+        assertEquals(todo.getId(), addedTodo.getId());
+    }
 }
