@@ -5,10 +5,12 @@ import com.todoList.todoList.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 public class TodoServiceTest {
@@ -58,4 +60,20 @@ public class TodoServiceTest {
         //then
         assertEquals(todo.getId(), addedTodo.getId());
     }
+
+    @Test
+    void should_return_success_message_when_delete_todo_given_id(){
+        //given
+        TodoRepository mock = Mockito.mock(TodoRepository.class);
+        Todo todo=new Todo(1, "学习1",true);
+        given(mock.findById(todo.getId())).willReturn(
+                todo
+        );
+        TodoService todoService = new TodoService(mock);
+        //when
+        String message=todoService.deleteTodo(todo.getId());
+        //then
+        assertEquals("delete success!", message);
+    }
+
 }

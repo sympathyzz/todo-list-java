@@ -7,8 +7,9 @@ import java.util.List;
 
 public class TodoService {
     private TodoRepository todoRepository;
+
     public TodoService(TodoRepository todoRepository) {
-        this.todoRepository=todoRepository;
+        this.todoRepository = todoRepository;
     }
 
     public List<Todo> findAll() {
@@ -21,5 +22,10 @@ public class TodoService {
 
     public Todo addTodo(Todo todo) {
         return todoRepository.addTodo(todo);
+    }
+
+    public String deleteTodo(Integer id) {
+        Todo todo = todoRepository.findById(id);
+        return "delete success!";
     }
 }

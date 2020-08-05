@@ -16,4 +16,12 @@ public class TodoRepository {
     public Todo addTodo(Todo todo) {
         return null;
     }
+
+    public void deletTodo(Integer id) {
+
+    }
+
+    public Todo findById(Integer id) {
+        return null;
+    }
 }
