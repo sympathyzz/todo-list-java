@@ -28,4 +28,19 @@ public class TodoServiceTest {
         //then
         assertEquals(2, todos.size());
     }
+
+    @Test
+    void should_change_status_when_update_status_given_id(){
+        //given
+        TodoRepository mock = Mockito.mock(TodoRepository.class);
+        when(mock.updateStatus(1)).thenReturn(
+                        new Todo(1, "学习1",false)
+        );
+        TodoService todoService = new TodoService(mock);
+        Todo todo=new Todo(1, "学习1",true);
+        //when
+        Todo updateTodo = todoService.updateStatus(todo.getId());
+        //then
+        assertEquals(false, updateTodo.getStatus());
+    }
 }

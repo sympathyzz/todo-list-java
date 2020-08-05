@@ -14,4 +14,8 @@ public class TodoService {
     public List<Todo> findAll() {
         return todoRepository.findAll();
     }
+
+    public Todo updateStatus(Integer id) {
+        return todoRepository.updateStatus(id);
+    }
 }

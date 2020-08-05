@@ -8,4 +8,8 @@ public class TodoRepository {
     public List<Todo> findAll() {
         return null;
     }
+
+    public Todo updateStatus(int id) {
+        return null;
+    }
 }
