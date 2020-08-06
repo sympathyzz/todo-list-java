@@ -37,15 +37,15 @@ public class TodoServiceTest {
     void should_change_status_when_update_status_given_id(){
         //given
         TodoRepository mock = Mockito.mock(TodoRepository.class);
-        when(mock.updateStatus(1)).thenReturn(
-                        new Todo(1, "学习1",false)
+        when(mock.findById(1)).thenReturn(
+                       Optional.of( new Todo(1, "学习1",false))
         );
         TodoService todoService = new TodoService(mock);
-        Todo todo=new Todo(1, "学习1",true);
+        Todo todo=new Todo(1, "学习1",false);
         //when
-        Todo updateTodo = todoService.updateStatus(todo.getId());
+        Optional<Todo> updateTodo = todoService.updateStatus(todo.getId());
         //then
-        assertEquals(false, updateTodo.getStatus());
+        assertEquals(true, updateTodo.get().getStatus());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class TodoServiceTest {
         //given
         TodoRepository mock = Mockito.mock(TodoRepository.class);
         Todo todo=new Todo(1, "学习1",true);
-        when(mock.addTodo(todo)).thenReturn(
+        when(mock.save(todo)).thenReturn(
                 todo
         );
         TodoService todoService = new TodoService(mock);
@@ -64,18 +64,18 @@ public class TodoServiceTest {
     }
 
     @Test
-    void should_return_success_message_when_delete_todo_given_id(){
+    void should_return_success_message_when_delete_todo_given_id() throws Exception {
         //given
         TodoRepository mock = Mockito.mock(TodoRepository.class);
         Todo todo=new Todo(1, "学习1",true);
         given(mock.findById(todo.getId())).willReturn(
-                todo
+                Optional.of(todo)
         );
         TodoService todoService = new TodoService(mock);
         //when
-        String message=todoService.deleteTodo(todo.getId());
+        Boolean result = todoService.deleteTodo(todo.getId());
         //then
-        assertEquals("delete success!", message);
+        assertEquals(true, result);
     }
 
     @Test
@@ -83,16 +83,16 @@ public class TodoServiceTest {
         //given
         TodoRepository mock = Mockito.mock(TodoRepository.class);
         when(mock.findById(1)).thenReturn(
-                new Todo(1, "学习1",false)
+                Optional.of(new Todo(1, "学习1",false))
         );
         TodoService todoService = new TodoService(mock);
         Integer todoId = 1;
         //when
-        Todo returnTodo = todoService.findById(todoId);
+        Optional<Todo> returnTodo = todoService.findById(todoId);
 
         //then
-        assertNotNull(returnTodo);
-        assertEquals(false, returnTodo.getStatus());
+        assertNotNull(returnTodo.isPresent());
+        assertEquals("学习1", returnTodo.get().getContent());
 
     }
 

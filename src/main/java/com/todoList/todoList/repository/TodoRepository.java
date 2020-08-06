@@ -1,27 +1,8 @@
 package com.todoList.todoList.repository;
 
 import com.todoList.todoList.entity.Todo;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 
-public class TodoRepository {
-    public List<Todo> findAll() {
-        return null;
-    }
-
-    public Todo updateStatus(int id) {
-        return null;
-    }
-
-    public Todo addTodo(Todo todo) {
-        return null;
-    }
-
-    public void deletTodo(Integer id) {
-
-    }
-
-    public Todo findById(Integer id) {
-        return null;
-    }
+public interface TodoRepository extends JpaRepository<Todo,Integer> {
 }

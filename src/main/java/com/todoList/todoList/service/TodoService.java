@@ -2,9 +2,12 @@ package com.todoList.todoList.service;
 
 import com.todoList.todoList.entity.Todo;
 import com.todoList.todoList.repository.TodoRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class TodoService {
     private TodoRepository todoRepository;
 
@@ -16,20 +19,33 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
-    public Todo updateStatus(Integer id) {
-        return todoRepository.updateStatus(id);
+    public Optional<Todo> updateStatus(Integer id) {
+        Optional<Todo> todo = findById(id);
+        if(!todo.isPresent()){
+        }
+        if (todo.get().getStatus()!=null){
+            Boolean status=todo.get().getStatus();
+            todo.get().setStatus(!status);
+            return todo;
+
+        }
+        return null;
     }
 
     public Todo addTodo(Todo todo) {
-        return todoRepository.addTodo(todo);
+        return todoRepository.save(todo);
     }
 
-    public String deleteTodo(Integer id) {
-        Todo todo = todoRepository.findById(id);
-        return "delete success!";
+    public Boolean deleteTodo(Integer id) throws Exception {
+        Optional<Todo> todo = todoRepository.findById(id);
+        if (!todo.isPresent()){
+            throw new Exception();
+        }
+        todo.ifPresent(todoRepository::delete);
+        return true;
     }
 
-    public Todo findById(Integer id) {
+    public Optional<Todo> findById(Integer id) {
         return todoRepository.findById(id);
     }
 }

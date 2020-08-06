@@ -1,7 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:file:./h2/intergrationtestdb
-#    url: jdbc:h2:file:./h2/testdb
+    url: jdbc:h2:file:./h2/integationtestdb
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -14,4 +13,4 @@ spring:
 #    locations: classpath:db/migration
 server:
   #端口号
-  port: 8083
+  port: 8084
