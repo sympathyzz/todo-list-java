@@ -4,10 +4,7 @@ import com.todoList.todoList.entity.Todo;
 import com.todoList.todoList.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,12 @@ public class TodoController {
     @ResponseStatus(HttpStatus.OK)
     public List<Todo> getAll(){
         return todoService.findAll();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Todo addTodo(@RequestBody Todo todo){
+        return todoService.addTodo(todo);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.todoList.todoList.integration;
 
+import com.alibaba.fastjson.JSONObject;
 import com.todoList.todoList.entity.Todo;
 import com.todoList.todoList.repository.TodoRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -8,10 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,6 +44,16 @@ public class TodoIntegrationTest {
         mockMvc.perform(get("/todos"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(hasSize(2)));
+    }
+
+    @Test
+    void should_return_todo_when_add_given_todo() throws Exception {
+        Todo todo=new Todo(null,"学习3",false);
+        String todoJsonString = JSONObject.toJSONString(todo);
+        mockMvc.perform(post("/todos").contentType(MediaType.APPLICATION_JSON).content(todoJsonString))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.content").value(todo.getContent()))
+                .andExpect(jsonPath("$.status").value(todo.getStatus()));
     }
 
 }
