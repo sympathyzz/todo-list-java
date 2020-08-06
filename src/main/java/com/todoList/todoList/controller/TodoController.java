@@ -27,4 +27,10 @@ public class TodoController {
         return todoService.addTodo(todo);
     }
 
+    @DeleteMapping("/{todoId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteTodo(@PathVariable Integer todoId) throws Exception {
+        todoService.deleteTodo(todoId);
+    }
+
 }

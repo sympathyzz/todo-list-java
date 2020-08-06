@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.todoList.todoList.entity.Todo;
 import com.todoList.todoList.repository.TodoRepository;
 import org.junit.jupiter.api.AfterEach;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,6 +54,13 @@ public class TodoIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content").value(todo.getContent()))
                 .andExpect(jsonPath("$.status").value(todo.getStatus()));
+    }
+
+    @Test
+    void should_return_202_when_delete_given_todo_id() throws Exception {
+        Integer id=todoRepository.findAll().get(0).getId();
+        mockMvc.perform(delete("/todos/"+id))
+                .andExpect(status().isAccepted());
     }
 
 }
