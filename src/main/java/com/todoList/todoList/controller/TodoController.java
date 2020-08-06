@@ -22,6 +22,12 @@ public class TodoController {
         return todoService.findAll();
     }
 
+    @GetMapping("/undos")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Todo> getUndoList(){
+        return todoService.findUndoList();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Todo addTodo(@RequestBody Todo todo){

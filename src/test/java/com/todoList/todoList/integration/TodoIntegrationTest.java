@@ -72,4 +72,11 @@ public class TodoIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(!todo.getStatus()));
     }
+
+    @Test
+    void should_return_undo_list_when_find_undo_list_given_no_parameter() throws Exception {
+        mockMvc.perform(get("/todos/undos"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].status").value(false));
+    }
 }
