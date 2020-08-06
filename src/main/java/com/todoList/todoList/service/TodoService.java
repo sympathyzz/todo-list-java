@@ -26,6 +26,7 @@ public class TodoService {
         if (todo.getStatus()!=null){
             Boolean status=todo.getStatus();
             todo.setStatus(!status);
+            todoRepository.save(todo);
             return todo;
         }
         return null;
@@ -46,7 +47,7 @@ public class TodoService {
         if(!todo.isPresent()){
             throw new NoSuchDataException();
         }
-        return todoRepository.findById(id).get();
+        return todo.get();
     }
 
     public List<Todo> findUndoList() {
