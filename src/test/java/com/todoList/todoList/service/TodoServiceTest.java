@@ -1,17 +1,16 @@
 package com.todoList.todoList.service;
 
 import com.todoList.todoList.entity.Todo;
+import com.todoList.todoList.exception.NoSuchDataException;
 import com.todoList.todoList.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
@@ -49,6 +48,21 @@ public class TodoServiceTest {
     }
 
     @Test
+    void should_throw_NoSuchDataException_when_update_status_given_wrong_todo_id(){
+        //given
+        TodoRepository mock = Mockito.mock(TodoRepository.class);
+        Integer wrong_id = 9999;
+        when(mock.findById(wrong_id)).thenReturn(
+                Optional.ofNullable(null)
+        );
+        TodoService todoService = new TodoService(mock);
+        //when
+        Throwable throwable = assertThrows(NoSuchDataException.class, () -> todoService.findById(wrong_id));
+        //then
+        assertEquals(NoSuchDataException.class, throwable.getClass());
+    }
+
+    @Test
     void should_return_todo_when_add_given_new_todo(){
         //given
         TodoRepository mock = Mockito.mock(TodoRepository.class);
@@ -64,7 +78,7 @@ public class TodoServiceTest {
     }
 
     @Test
-    void should_return_success_message_when_delete_todo_given_id() throws Exception {
+    void should_return_true_when_delete_todo_given_id() throws Exception {
         //given
         TodoRepository mock = Mockito.mock(TodoRepository.class);
         Todo todo=new Todo(1, "学习1",true);
@@ -76,6 +90,38 @@ public class TodoServiceTest {
         Boolean result = todoService.deleteTodo(todo.getId());
         //then
         assertEquals(true, result);
+    }
+
+    @Test
+    void should_return_NoSuchDataException_when_delete_todo_given_wrong_id() throws Exception {
+        //given
+        TodoRepository mock = Mockito.mock(TodoRepository.class);
+        Integer wrong_id = 9999;
+        given(mock.findById(wrong_id)).willReturn(
+                Optional.ofNullable(null)
+        );
+        TodoService todoService = new TodoService(mock);
+        //when
+        Throwable throwable = assertThrows(NoSuchDataException.class, () -> todoService.deleteTodo(wrong_id));
+        //then
+        assertEquals(NoSuchDataException.class, throwable.getClass());
+    }
+
+    @Test
+    void should_return_NoSuchDataException_when_find_given_wrong_id() {
+        //given
+        TodoRepository mock = Mockito.mock(TodoRepository.class);
+        Integer wrong_id = 9999;
+        when(mock.findById(wrong_id)).thenReturn(
+                Optional.ofNullable(null)
+        );
+        TodoService todoService = new TodoService(mock);
+        //when
+        Throwable throwable = assertThrows(NoSuchDataException.class, () -> todoService.findById(wrong_id));
+
+        //then
+        assertEquals(NoSuchDataException.class, throwable.getClass());
+
     }
 
     @Test

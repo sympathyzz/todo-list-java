@@ -36,13 +36,13 @@ public class TodoController {
 
     @DeleteMapping("/{todoId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteTodo(@PathVariable Integer todoId) throws Exception {
+    public void deleteTodo(@PathVariable Integer todoId) {
         todoService.deleteTodo(todoId);
     }
 
     @PutMapping("/{todoId}")
     @ResponseStatus(HttpStatus.OK)
-    public Todo updateTodo(@PathVariable Integer todoId) throws Exception {
+    public Todo updateTodo(@PathVariable Integer todoId) {
         return todoService.updateStatus(todoId);
     }
 

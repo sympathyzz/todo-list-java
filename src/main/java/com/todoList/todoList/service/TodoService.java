@@ -1,6 +1,7 @@
 package com.todoList.todoList.service;
 
 import com.todoList.todoList.entity.Todo;
+import com.todoList.todoList.exception.NoSuchDataException;
 import com.todoList.todoList.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,10 @@ public class TodoService {
 
     public Todo updateStatus(Integer id) {
         Todo todo = findById(id);
-        if(todo==null){
-        }
         if (todo.getStatus()!=null){
             Boolean status=todo.getStatus();
             todo.setStatus(!status);
             return todo;
-
         }
         return null;
     }
@@ -37,16 +35,17 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
-    public Boolean deleteTodo(Integer id) throws Exception {
-        Optional<Todo> todo = todoRepository.findById(id);
-        if (!todo.isPresent()){
-            throw new Exception();
-        }
-        todo.ifPresent(todoRepository::delete);
+    public Boolean deleteTodo(Integer id) {
+        Todo todo = findById(id);
+        todoRepository.delete(todo);
         return true;
     }
 
     public Todo findById(Integer id) {
+        Optional<Todo> todo=todoRepository.findById(id);
+        if(!todo.isPresent()){
+            throw new NoSuchDataException();
+        }
         return todoRepository.findById(id).get();
     }
 
