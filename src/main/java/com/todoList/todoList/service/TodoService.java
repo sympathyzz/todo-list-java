@@ -19,13 +19,13 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
-    public Optional<Todo> updateStatus(Integer id) {
-        Optional<Todo> todo = findById(id);
-        if(!todo.isPresent()){
+    public Todo updateStatus(Integer id) {
+        Todo todo = findById(id);
+        if(todo==null){
         }
-        if (todo.get().getStatus()!=null){
-            Boolean status=todo.get().getStatus();
-            todo.get().setStatus(!status);
+        if (todo.getStatus()!=null){
+            Boolean status=todo.getStatus();
+            todo.setStatus(!status);
             return todo;
 
         }
@@ -45,7 +45,7 @@ public class TodoService {
         return true;
     }
 
-    public Optional<Todo> findById(Integer id) {
-        return todoRepository.findById(id);
+    public Todo findById(Integer id) {
+        return todoRepository.findById(id).get();
     }
 }

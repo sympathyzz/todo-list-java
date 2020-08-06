@@ -43,9 +43,9 @@ public class TodoServiceTest {
         TodoService todoService = new TodoService(mock);
         Todo todo=new Todo(1, "学习1",false);
         //when
-        Optional<Todo> updateTodo = todoService.updateStatus(todo.getId());
+        Todo updateTodo = todoService.updateStatus(todo.getId());
         //then
-        assertEquals(true, updateTodo.get().getStatus());
+        assertEquals(true, updateTodo.getStatus());
     }
 
     @Test
@@ -88,11 +88,11 @@ public class TodoServiceTest {
         TodoService todoService = new TodoService(mock);
         Integer todoId = 1;
         //when
-        Optional<Todo> returnTodo = todoService.findById(todoId);
+        Todo returnTodo = todoService.findById(todoId);
 
         //then
-        assertNotNull(returnTodo.isPresent());
-        assertEquals("学习1", returnTodo.get().getContent());
+        assertNotNull(returnTodo);
+        assertEquals("学习1", returnTodo.getContent());
 
     }
 

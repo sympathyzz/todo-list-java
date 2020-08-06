@@ -63,4 +63,13 @@ public class TodoIntegrationTest {
                 .andExpect(status().isAccepted());
     }
 
+    @Test
+    void should_return_todo_when_update_status_given_todo_id() throws Exception {
+        Integer id=todoRepository.findAll().get(0).getId();
+        Todo todo=new Todo(id,"学习3",false);
+        String todoJsonString = JSONObject.toJSONString(todo);
+        mockMvc.perform(put("/todos/"+id).contentType(MediaType.APPLICATION_JSON).content(todoJsonString))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(!todo.getStatus()));
+    }
 }

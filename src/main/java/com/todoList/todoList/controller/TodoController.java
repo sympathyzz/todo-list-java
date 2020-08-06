@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/todos")
@@ -31,6 +32,12 @@ public class TodoController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteTodo(@PathVariable Integer todoId) throws Exception {
         todoService.deleteTodo(todoId);
+    }
+
+    @PutMapping("/{todoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Todo updateTodo(@PathVariable Integer todoId) throws Exception {
+        return todoService.updateStatus(todoId);
     }
 
 }
